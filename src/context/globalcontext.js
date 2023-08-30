@@ -1,7 +1,8 @@
 
 import { createContext, useEffect, useMemo, useState } from "react";
-import {ethers} from 'ethers';
+import {Contract, ethers} from 'ethers';
 import Nftmarketplace from '../contrats/nftmarketplace.json'
+import Nftmint from '../contrats/nftmint.json'
 
 
 const GlobalContext = createContext();
@@ -16,6 +17,8 @@ const GlobalContext = createContext();
     const [address, setAddress] = useState("address")
     const [balance, setBalance] = useState("Connect metamask")
     const [nftMPcontract, setNftMPcontract] = useState(null);
+    const [nftmintcontrat, setNftMintContrat] = useState(null)
+    const [listeditems, setListeditems] = useState(null);
 
 
 
@@ -40,19 +43,32 @@ const GlobalContext = createContext();
                      if(address){
                          const balance =  await provider.getBalance(address);
                          setBalance( ethers.utils.formatEther(balance));
-                         setAddress (address);
-                         
+                         setAddress (address);   
                          
                     } 
+
+
+                    const Nftmintt  = new ethers.Contract(
+                      '0x56b9CFa98051F8650F1eC45831841d054900FaF8',
+                      Nftmint.abi,
+                      _signer
+                  ); 
+                  setNftMintContrat(Nftmintt)
+                  console.log("nftmincontrat",Nftmintt)
+
+
+
     
                        const Nftmarketplacee  =   new ethers.Contract(
                         '0xbD4e8327915539b4A3841B605E012bDa415d26e9',
                         Nftmarketplace.abi,
                         _signer
                     );  
-                    /* console.log("mpc",Nftmarketplacee) */
                     setNftMPcontract(Nftmarketplacee )
-                    
+                    console.log("nftmarketplace",Nftmarketplacee)
+
+
+                  
     
                 })()
             }
@@ -64,6 +80,49 @@ const GlobalContext = createContext();
         
 
     }, []);
+
+
+  /*   const price = 10
+   const _price =  ethers.utils.parseEther(price.toString())
+   console.log('fiyat',_price) */
+
+
+    const startNFTSale = async (_contratAddress,_price,_tokenId)=>{
+      _contratAddress = "0xbD4e8327915539b4A3841B605E012bDa415d26e9"
+
+      const state = await nftmintcontrat.getApproved(_tokenId)
+      if(state === "0xbD4e8327915539b4A3841B605E012bDa415d26e9" ){
+        await nftMPcontract.startNFTSale(_contratAddress,_price,_tokenId)
+      }else{
+        await nftMPcontract.approve(_contratAddress,_price,_tokenId)
+      }
+
+    }
+
+    const getListedNft = async () =>{
+       if(address){
+        const number = await nftMPcontract.IdForSale();
+        if(!(number>0)){
+          return ;
+        }
+
+        let array = [];
+        for(let i = 0; i<number; i++){
+          let info = await nftMPcontract.idToItemForSale(i);
+          if(!info.state){
+            let newItem = {
+              0:info.contractAddress,
+              1:info.tokenId.toString(),
+              2:info.price.toString(),
+            }
+            array.push(newItem);
+          }
+        }
+
+        setListeditems(array)
+        console.log("listeditems",listeditems)
+       }
+    }
 
 
     const connectMetamask = async() =>{
@@ -120,9 +179,12 @@ const GlobalContext = createContext();
         address,
         balance,
         nftMPcontract,
+        nftmintcontrat,
         connectMetamask,
+        startNFTSale,
+        getListedNft,
       };
-    }, [provider, signer, address, balance,nftMPcontract,]);
+    }, [provider, signer, address, balance,nftMPcontract,nftmintcontrat]);
 
    
 
@@ -140,3 +202,8 @@ const GlobalContext = createContext();
 
 
  //nftmarketplacecontractadress=0xbD4e8327915539b4A3841B605E012bDa415d26e9
+ //nftcontract= 0x56b9CFa98051F8650F1eC45831841d054900FaF8
+
+ 
+                    
+                     

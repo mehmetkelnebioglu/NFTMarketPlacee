@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../context/globalcontext';
+import 'bulma/css/bulma.css';
 
 const Listeditems = () => {
 
-    const{deger} = useContext(GlobalContext)
+    const{deger,listeditems} = useContext(GlobalContext)
 
 
     return (
         <div>
-            this is listed items page <br />
-            {deger}
+            {deger} <br />
+            <button class="button is-warning">Get listed items</button>
 
         </div>
     );

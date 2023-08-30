@@ -19,7 +19,7 @@ const Myprofil = () => {
         const nftsResponse = await alchemy.nft.getNftsForOwner(address);
         const nftsArray = Array.from(nftsResponse.ownedNfts);
         setNfts(nftsArray);
-        console.log("nfts",nftsResponse)
+        console.log("nfts", nftsArray);
     };
 
     const renderNfts = () => {
@@ -30,21 +30,29 @@ const Myprofil = () => {
                 </div>
             );
         } else {
-            return nfts.map((nft, index) => {
-                return (
-                    <div key={index} className="card">
-                        <div className="card-image">
-                            <img src={nft.media[0].raw} alt={nft.tokenId} />
+            return (
+                <div>
+                    <h1>My NFTs</h1>
+                    <br />
+                    {nfts.map((nft, index) => (
+                        <div key={index} className="card">
+                            <div className="card-image">
+                                {nft.media[0] && nft.media[0].raw ? (
+                                    <img src={nft.media[0].raw} alt={nft.tokenId} />
+                                ) : (
+                                    <p>Image not available</p>
+                                )}
+                            </div>
+                            <div className="card-content">
+                                <p className="card-title">Token id: {nft.tokenId}</p>
+                                <p className="card-subtitle">Contract address: {nft.contract.address}</p>
+                                <p className="card-text">NFT Symbol: {nft.contract.symbol}</p>
+                                <p className="card-text">NFT Name: {nft.title}</p>
+                            </div>
                         </div>
-                        <div className="card-content">
-                            <p className="card-title">Token id: {nft.tokenId}</p>
-                            <p className="card-subtitle">Contrat adress: {nft.contract.address}</p>
-                            <p className="card-text">NFT Senbol: {nft.contract.symbol}</p>
-                            <p className="card-text">NFT Name: {nft.title}</p>
-                        </div>
-                    </div>
-                );
-            });
+                    ))}
+                </div>
+            );
         }
     };
 
@@ -52,16 +60,11 @@ const Myprofil = () => {
         <div>
             <button className="button is-dark" onClick={getAssets}>
                 Show my nfts
-          </button>
+            </button>
             <br /> <br />
-            <div>
-                <h1>My NFTs</h1>
-                <br />
-                {renderNfts()}
-            </div>
+            {renderNfts()}
         </div>
     );
 };
 
 export default Myprofil;
-

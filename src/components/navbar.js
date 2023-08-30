@@ -50,6 +50,14 @@ const Navbar = () => {
                     <a className="navbar-item" href='http://localhost:3000/listeditems'>
                         Listed Items
                    </a>
+
+                   <a className="navbar-item" href='http://localhost:3000/Generatenft'>
+                        Generate NFTs
+                   </a>
+
+                   <a className="navbar-item" href='http://localhost:3000/uploudtoifps'>
+                   up loudtoifps
+                   </a>
                     
                    
 
