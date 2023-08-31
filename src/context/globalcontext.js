@@ -19,6 +19,7 @@ const GlobalContext = createContext();
     const [nftMPcontract, setNftMPcontract] = useState(null);
     const [nftmintcontrat, setNftMintContrat] = useState(null)
     const [listeditems, setListeditems] = useState(null);
+   
 
 
 
@@ -38,7 +39,19 @@ const GlobalContext = createContext();
                     const _signer =  provider.getSigner();
                     setSigner(_signer)
                     const   address = (await _signer.getAddress()) || null;
-                    
+                    //console.log(address)
+/* 
+                   (async()=>{
+                    const provider = new ethers.providers.JsonRpcProvider();
+                   const contract = new ethers.Contract("0xbD4e8327915539b4A3841B605E012bDa415d26e9", Nftmarketplace.abi, provider);
+
+                    console.log("kontrat", contract);
+
+                   })() */
+
+
+
+
                     
                      if(address){
                          const balance =  await provider.getBalance(address);

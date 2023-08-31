@@ -58,9 +58,15 @@ const Myprofil = () => {
 
     return (
         <div>
+            <div style={{display:'flex', justifycontent:'center',alignitems:'center' }}>
             <button className="button is-dark" onClick={getAssets}>
                 Show my nfts
             </button>
+
+            </div>
+            
+
+
             <br /> <br />
             {renderNfts()}
         </div>

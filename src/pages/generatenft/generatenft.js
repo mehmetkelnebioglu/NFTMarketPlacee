@@ -13,13 +13,14 @@ const Generatenft = () => {
   const [formParams,  setformParams] = useState({name:"",description:"",price:""});
   const [fileURL, setFileURL] = useState (null) ;
   const [message, updateMessage] = useState("");
+  const [file, setfile] = useState("")
 
 
 
   const key = "8924569680d88d5cc981";//process.env.REACT_APP_PINATA_KEY;
-  console.log("key",key)
+  //console.log("key",key)
   const secret = "31b319f8f4d58fb4a904579c9d40e84dd297e59c0b79bb48007768b02808aec4";//process.env.REACT_APP_PINATA_SECRET;
-  console.log("key",secret)
+  //console.log("key",secret)
 
   //const axios = require('axios');
   const FormData = require('form-data');
@@ -52,10 +53,9 @@ const Generatenft = () => {
 
 
 
-
-
   const uploadFileToIPFS = async(file) => {
-    console.log(file)
+    console.log(file.name)
+    setfile(file.name)
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
     let data = new FormData();
     //console.log("data",data)
@@ -115,8 +115,6 @@ const Generatenft = () => {
     });
 };  
 // asil
-
-
 
 
 
@@ -248,10 +246,11 @@ const Generatenft = () => {
            //nftmintcontrat.setGasLimit(3000000)
            await(await nftmintcontrat.mint(metadataURL)).wait()
            const id = await nftmintcontrat.tokenCount()
+           const numberId = id.toNumber()
            await(await nftmintcontrat.setApprovalForAll("0xbD4e8327915539b4A3841B605E012bDa415d26e9", true)).wait()
             
             const listingPrice = ethers.utils.parseEther(formParams.price.toString())
-            await(await nftMPcontract.starNFTSale('0x56b9CFa98051F8650F1eC45831841d054900FaF8', id, listingPrice)).wait() 
+            await(await nftMPcontract.starNFTSale('0x56b9CFa98051F8650F1eC45831841d054900FaF8',numberId,listingPrice)).wait() 
           
             alert('succcessfuly listed your nft');
             updateMessage("")
@@ -267,6 +266,34 @@ const Generatenft = () => {
  } 
  
 
+ 
+  const deneme = async()=>{
+    const metadataURL=`https://www.facebook.com/`
+    // const id = await nftmintcontrat.tokenCount()
+    //const numberId = id.toNumber()
+      //console.log("id degeri",numberId,typeof numberId) 
+        console.log("formParams",typeof formParams.price)
+        const mp = await nftMPcontract.owner()
+        console.log("mp",mp)
+        const nft = await nftMPcontract.IdForSale()
+        console.log("nft",nft)
+      await(await nftmintcontrat.mint(metadataURL)).wait()
+      const id = await nftmintcontrat.tokenCount()
+      const numberId = id.toNumber()
+      await(await nftmintcontrat.setApprovalForAll("0xbD4e8327915539b4A3841B605E012bDa415d26e9", true)).wait()
+       
+       const listingPrice = ethers.utils.parseEther(formParams.price.toString())
+       console.log("listprice",listingPrice)
+       await(await nftMPcontract.starNFTSale('0x56b9CFa98051F8650F1eC45831841d054900FaF8',numberId,listingPrice,{
+        gasLimit: 100000,
+      })).wait() 
+     
+       alert('succcessfuly listed your nft');
+       updateMessage("")
+       setformParams({name:"",description:"",price:""}) 
+
+      
+  }
 
 
   return (
@@ -286,8 +313,8 @@ const Generatenft = () => {
               </span>
             </span>
             <span class="file-name">
-              Screen Shot 2017-07-29 at 15.54.25.png
-            </span>
+             {file}
+            </span>x
           </label>
         </div>
 
@@ -320,6 +347,8 @@ const Generatenft = () => {
                 <button class="button is-link" onClick={generateNFT}>Generate NFT</button>
               </div>
          </div>
+
+         <button onClick={deneme}>deneme</button>
 
     </div> 
     </div>

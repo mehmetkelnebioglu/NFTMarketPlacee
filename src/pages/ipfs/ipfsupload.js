@@ -185,3 +185,35 @@ export  const uploadFileToIPFS = async(file) => {
 
 
 
+/* const uploadFileToIPFS = async(file) => {
+
+  
+  if (file) {
+
+   try {
+     const formData = new FormData();
+     formData.append("file", file);
+
+     const resFile = await axios({
+       method:"POST",
+       url: "https://api.pinata.cloud/pinning/pinFile",
+       data: formData,
+       headers: {
+         pinata_api_key:"8924569680d88d5cc981",
+         pinata_secret_api_key:"31b319f8f4d58fb4a904579c9d40e84dd297e59c0b79bb48007768b02808aec4",
+         "Content-Type": "multipart/form-data",
+       }
+
+     });
+     console("kotrol post yapti")
+/* 
+     const ImgHash = ipfs://${resFile.data. IpfsHash};
+     signer.add(address, ImgHash);
+*/
+     
+   /*  } catch (e) {
+     console.log(e)
+   }  */
+
+/*  } 
+}   */ 
