@@ -242,17 +242,17 @@ const Generatenft = () => {
 
            updateMessage("please wait uploading ")
 
-           console.log("nftmintcontrat",)
-           //nftmintcontrat.setGasLimit(3000000)
+           console.log("nftmintcontrat",nftmintcontrat)
            await(await nftmintcontrat.mint(metadataURL)).wait()
            const id = await nftmintcontrat.tokenCount()
-           const numberId = id.toNumber()
            await(await nftmintcontrat.setApprovalForAll("0xbD4e8327915539b4A3841B605E012bDa415d26e9", true)).wait()
             
             const listingPrice = ethers.utils.parseEther(formParams.price.toString())
-            await(await nftMPcontract.starNFTSale('0x56b9CFa98051F8650F1eC45831841d054900FaF8',numberId,listingPrice)).wait() 
+            await(await nftMPcontract.starNFTSale('0x56b9CFa98051F8650F1eC45831841d054900FaF8',listingPrice,id,{
+              gasLimit: 300000,
+            })).wait() 
           
-            alert('succcessfuly listed your nft');
+            alert("succcessfuly listed your nft tokenid:" + id );
             updateMessage("")
             setformParams({name:"",description:"",price:""}) 
             
@@ -269,26 +269,27 @@ const Generatenft = () => {
  
   const deneme = async()=>{
     const metadataURL=`https://www.facebook.com/`
-    // const id = await nftmintcontrat.tokenCount()
-    //const numberId = id.toNumber()
-      //console.log("id degeri",numberId,typeof numberId) 
-        console.log("formParams",typeof formParams.price)
+    
+    
+         console.log("formParams",typeof formParams.price)
         const mp = await nftMPcontract.owner()
         console.log("mp",mp)
         const nft = await nftMPcontract.IdForSale()
-        console.log("nft",nft)
+        console.log("nft",nft.toNumber())
       await(await nftmintcontrat.mint(metadataURL)).wait()
-      const id = await nftmintcontrat.tokenCount()
-      const numberId = id.toNumber()
+      const id = await nftmintcontrat.tokenCount() 
+      console.log("token sayisi",id,id.toNumber())
       await(await nftmintcontrat.setApprovalForAll("0xbD4e8327915539b4A3841B605E012bDa415d26e9", true)).wait()
        
        const listingPrice = ethers.utils.parseEther(formParams.price.toString())
-       console.log("listprice",listingPrice)
-       await(await nftMPcontract.starNFTSale('0x56b9CFa98051F8650F1eC45831841d054900FaF8',numberId,listingPrice,{
-        gasLimit: 100000,
+       console.log("listprice",listingPrice) 
+
+       const nftContractAddress = '0x56b9CFa98051F8650F1eC45831841d054900FaF8';
+       await(await nftMPcontract.starNFTSale(nftContractAddress,listingPrice,id,{
+        gasLimit: 300000,
       })).wait() 
      
-       alert('succcessfuly listed your nft');
+       alert('your nft succcessfuly listed your nft tokenid:'+id);
        updateMessage("")
        setformParams({name:"",description:"",price:""}) 
 
@@ -314,7 +315,7 @@ const Generatenft = () => {
             </span>
             <span class="file-name">
              {file}
-            </span>x
+            </span>
           </label>
         </div>
 

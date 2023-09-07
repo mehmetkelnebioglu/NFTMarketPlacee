@@ -3,6 +3,7 @@ import { createContext, useEffect, useMemo, useState } from "react";
 import {Contract, ethers} from 'ethers';
 import Nftmarketplace from '../contrats/nftmarketplace.json'
 import Nftmint from '../contrats/nftmint.json'
+import { MetaMaskSDK } from '@metamask/sdk';
 
 
 const GlobalContext = createContext();
@@ -34,12 +35,15 @@ const GlobalContext = createContext();
             /* console.log("providerr",provider) */
 
             if(provider){
+                    
 
                 (async () => {
+                     await provider.send("eth_requestAccounts", []);
                     const _signer =  provider.getSigner();
                     setSigner(_signer)
+                    console.log("signer",_signer)
                     const   address = (await _signer.getAddress()) || null;
-                    //console.log(address)
+                    console.log("add",address)
 /* 
                    (async()=>{
                     const provider = new ethers.providers.JsonRpcProvider();
@@ -146,6 +150,17 @@ const GlobalContext = createContext();
         setSigner(_singner)
         const _address = await _singner.getAddress();
         setAddress(_address);
+         /*  const chainId =  await window.ethereum.request({method : 'eth_chainId'})
+          if(chainId !== "11155111"){
+            // alert('Please switch to Rinkeby network')
+
+            await window.ethereum.request({
+              method:'wallet_switchEthereumChain',
+              params: [{chainId:"11155111"}]
+            })
+          } */
+
+
         const __balance= await provider.getBalance(_address)
         setBalance(ethers.utils.formatEther(__balance))
         console.log("blc",balance)
