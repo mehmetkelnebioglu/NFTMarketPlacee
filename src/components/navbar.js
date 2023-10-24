@@ -52,12 +52,12 @@ const Navbar = () => {
                    </a>
 
                    <a className="navbar-item" href='http://localhost:3000/Generatenft'>
-                        Generate NFTs
+                        Generate & List NFT 
                    </a>
 
-                   <a className="navbar-item" href='http://localhost:3000/uploudtoifps'>
+                   {/* <a className="navbar-item" href='http://localhost:3000/uploudtoifps'>
                    up loudtoifps
-                   </a>
+                   </a> */}
                     
                    
 

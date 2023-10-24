@@ -267,7 +267,7 @@ const Generatenft = () => {
  
 
  
-  const deneme = async()=>{
+  /* const deneme = async()=>{
     const metadataURL=`https://www.facebook.com/`
     
     
@@ -294,7 +294,7 @@ const Generatenft = () => {
        setformParams({name:"",description:"",price:""}) 
 
       
-  }
+  } */
 
 
   return (
@@ -349,7 +349,7 @@ const Generatenft = () => {
               </div>
          </div>
 
-         <button onClick={deneme}>deneme</button>
+         {/* <button onClick={deneme}>deneme</button> */}
 
     </div> 
     </div>

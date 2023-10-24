@@ -18,7 +18,7 @@ function App() {
      <Route path='/Listeditems' element={<Listeditems/>}/>
      <Route path='/Myprofil' element={<Myprofil/> }/>
      <Route path='/Generatenft' element={<Generatenft/> }/>
-     <Route path='/uploudtoifps' element={<Ipfsupload/> }/>
+     {/* <Route path='/uploudtoifps' element={<Ipfsupload/> }/> */}
      <Route path='*' element={<div>Not Found</div>}/>
      </Routes>
      </BrowserRouter>

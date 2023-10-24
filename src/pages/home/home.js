@@ -1,5 +1,9 @@
 import React, { useContext } from 'react';
 import GlobalContext from '../../context/globalcontext';
+import 'bulma/css/bulma.css';
+
+
+
 
 const Home = () => {
 
@@ -7,9 +11,10 @@ const Home = () => {
 
 
     return (
-        <div>
-            {name} <br />
-            {address}
+        <div className='home'>
+
+            <p> WELCOME TO THE NFT MARKET PLACE </p> 
+            <p style={{}}>You can genrate and sell your NFT also You can buy a nft from maket place </p>
             
         </div>
     );
